@@ -2,7 +2,7 @@
 
 Source code for ESP32 based CAN-bus powered dashboard.
 
-Reprogrammable to interpret & display any vehicle's CAN data.
+Reprogrammable to interpret & display any CAN-bus containing vehicle's CAN data.
 
 Originally developed for Wildcat Formula Racing (University of Arizona) Formula SAE race car. 
 
@@ -16,11 +16,16 @@ Originally developed for Wildcat Formula Racing (University of Arizona) Formula 
 
 # Re-Configurability
 
-Reprogrammability to work on any CAN bus-containing vehicle. Open related source files for instructions on how to do so.
+Configured as-is for example project below.
+
+Reconfigurability of pinouts for CAN transceiver and pushbutton. Open hardware config source files to do so.
+
+Reprogrammability to interpret any vehicle's CAN-bus. Open CAN interpretor source files for instructions on how to do so.
 
 Reprogrammability to work with wide range of digital displays (TFT). Read [TFT_eSPI library documentation](https://github.com/Bodmer/TFT_eSPI) and edit library accordingly (`User_Setup.h` or `User_Setup_Select.h`) for doing so.
 
 # Example Project
+Project for University of Arizona FSAE racecar with custom MoTeC M150 CAN bus.
 
 ![(image of example project)](https://github.com/Sneupi/digital-dashboard/blob/main/exampleproject.jpg?raw=true)
 
