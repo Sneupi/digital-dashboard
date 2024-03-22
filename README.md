@@ -2,7 +2,9 @@
 
 Source code for ESP32 based CAN-bus powered dashboard. Developed in VS Code with PlatformIO extension. 
 
-Originally developed for Wildcat Formula Racing (University of Arizona) Formula SAE race car.
+Originally developed for Wildcat Formula Racing (University of Arizona) Formula SAE race car. 
+
+Reprogrammable to interpret & display any vehicle's CAN data.
 
 # Configurability
 
