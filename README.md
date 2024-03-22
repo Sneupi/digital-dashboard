@@ -50,9 +50,9 @@ Note: TFT_DC may be labeled "RS" depending on the TFT
 | CAN_RX | 18 |
 | CAN_TX | 19 |
 | --- | --- |
-| TFT_CS   33 |
-| TFT_DC   15 |
-| TFT_RST  32 |
+| TFT_CS | 33 |
+| TFT_DC | 15 |
+| TFT_RST | 32 |
 | --- | --- |
 | TFT_WR | 4 |
 | TFT_RD | 2 |
