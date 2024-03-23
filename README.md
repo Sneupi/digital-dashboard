@@ -25,7 +25,7 @@ Reprogrammability to interpret any vehicle's CAN-bus. Open CAN interpretor sourc
 Reprogrammability to work with wide range of digital displays (TFT). Read [TFT_eSPI library documentation](https://github.com/Bodmer/TFT_eSPI) and edit library accordingly (`User_Setup.h` or `User_Setup_Select.h`) for doing so.
 
 # Example Project
-Project for University of Arizona FSAE racecar with custom MoTeC M150 CAN bus.
+Project for University of Arizona FSAE racecar. Interprets custom MoTeC M150 CAN bus protocol.
 
 ![(image of example project)](https://github.com/Sneupi/digital-dashboard/blob/main/exampleproject.jpg?raw=true)
 
