@@ -22,8 +22,8 @@
 //#define SSD1963_800ALT_DRIVER // Alternative 480 x 800 display
 #define SSD1963_800BD_DRIVER    // 480 x 800 display sourced from https://www.buydisplay.com/7-tft-screen-touch-lcd-display-module-w-ssd1963-controller-board-mcu
 
-//#define TFT_RGB_ORDER TFT_RGB  // Colour order Red-Green-Blue
-#define TFT_RGB_ORDER TFT_BGR  // Colour order Blue-Green-Red
+#define TFT_RGB_ORDER TFT_RGB  // Colour order Red-Green-Blue
+//#define TFT_RGB_ORDER TFT_BGR  // Colour order Blue-Green-Red
 
 // ##################################################################################
 //
