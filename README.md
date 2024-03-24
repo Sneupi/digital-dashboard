@@ -18,9 +18,9 @@ Originally developed for Wildcat Formula Racing (University of Arizona) Formula 
 
 Configured as-is for example project below.
 
-Reconfigurability of pinouts for CAN transceiver and pushbutton. Open hardware config source files to do so.
+Reconfigurability of pinouts for CAN transceiver and pushbutton. Open `pinout.h` source files to do so.
 
-Reprogrammability to interpret any vehicle's CAN-bus. Open CAN interpretor source files for instructions on how to do so.
+Reprogrammability to interpret any vehicle's CAN-bus. Open CAN source files (`limits.h`, `TranslateCAN.h`) for instructions on how to do so.
 
 Reprogrammability to work with wide range of digital displays (TFT). Read [TFT_eSPI library documentation](https://github.com/Bodmer/TFT_eSPI) and edit library accordingly (`User_Setup.h` or `User_Setup_Select.h`) for doing so.
 

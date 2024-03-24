@@ -16,8 +16,6 @@
  * First screen of the dashboard.
 */
 
-// TODO: add tachometer bar widget
-
 class Screen1 : public Screen {
 public:
     Screen1(TFT_eSPI& tft, const ScreenPlacement& p)

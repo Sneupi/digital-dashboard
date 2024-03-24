@@ -6,6 +6,7 @@
 #include "can/CAN.h"
 
 #define REFRESH_INTERVAL 3000 //ms for force clear
+#define CAN_TIMEOUT_INTERVAL 500 //ms for heartbeat
 
 CAN can = CAN();
 TFT_eSPI tft = TFT_eSPI();
@@ -26,7 +27,7 @@ void setup() {
   tft.init();
 
   //init CAN
-  can.init(18, 19, 500); //FIXME pinout
+  can.init(CAN_RX, CAN_TX, CAN_TIMEOUT_INTERVAL);
 
   // init pushbutton
   pb.registerFunction([]() {

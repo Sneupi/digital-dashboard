@@ -17,8 +17,6 @@ private:
     /*none*/
 public:
 
-  //FIXME define real parsers for vehicle
-
     static bool rpm        (uint16_t value) { return value >= CAN_RPM_UPPER_LIMIT; }  
     static bool gear       (char* value)    { return false; } // No limit defined for gear
     static bool speed      (uint16_t value) { return false; } // No limit defined for speed
