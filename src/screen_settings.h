@@ -11,6 +11,8 @@ This can be changed to fit the screen size and font size
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 480
 
+#define SCREEN_ROTATION 1
+
 #define WIDGET_FONT_SIZE 2
 #define WIDGET_FONT &FreeMonoBold12pt7b
 

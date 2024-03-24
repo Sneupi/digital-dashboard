@@ -6,6 +6,11 @@
 #include <TFT_eSPI.h>
 #include "Screen.h"
 #include "../widget/ValueWidget.h"
+#include "driver/twai.h"
+#include "../can/TranslateCAN.h"
+#include "../can/EvaluateCAN.h"
+#include "../widget/BarWidget.h"
+#include "../can/limits.h"
 
 /**
  * First screen of the dashboard.
@@ -29,76 +34,37 @@ public:
         tft.fillRect(x, y, w, h, TFT_BLACK);
 
         // Initialize widgets
+        tachometer->init();
         fuelPercent->init();
         gear->init();
         coolantTemp->init();
         speed->init();
     }
 
-    int update(WidgetID id, uint16_t i) override {
-        // Check which widget to update based on id
-        if (id == WidgetID::GEAR) {
-            gear->update(i);
-            return 1;
+    int update(twai_message_t msg) override {
+        uint32_t id = msg.identifier;
+        if (id == CAN_RPM)         { 
+            tachometer->setErrorState(EvaluateCAN::rpm(TranslateCAN::rpm(msg.data)));
+            tachometer->update(TranslateCAN::rpm(msg.data));
         }
-        else if (id == WidgetID::SPEED) {
-            speed->update(i);
-            return 1;
+        if (id == CAN_GEAR)        { 
+            gear->setErrorState(EvaluateCAN::gear(TranslateCAN::gear(msg.data)));
+            gear->update(TranslateCAN::gear(msg.data)); 
         }
-        else if (id == WidgetID::FUELPERCENT) {
-            fuelPercent->update(i);
-            return 1;
+        if (id == CAN_SPEED)       { 
+            speed->setErrorState(EvaluateCAN::speed(TranslateCAN::speed(msg.data)));
+            speed->update(TranslateCAN::speed(msg.data)); 
         }
-        else if (id == WidgetID::COOLANTTEMP) {
-            coolantTemp->update(i);
-            return 1;
+        if (id == CAN_COOLANTTEMP) { 
+            coolantTemp->setErrorState(EvaluateCAN::coolantTemp(TranslateCAN::coolantTemp(msg.data)));
+            coolantTemp->update(TranslateCAN::coolantTemp(msg.data)); 
         }
-        
-        return 0;
-    }
+        if (id == CAN_FUELPERCENT) { 
+            fuelPercent->setErrorState(EvaluateCAN::fuelPercent(TranslateCAN::fuelPercent(msg.data)));
+            fuelPercent->update(TranslateCAN::fuelPercent(msg.data)); 
+        }
 
-    int update(WidgetID id, float f) override {
-        // Check which widget to update based on id
-        if (id == WidgetID::GEAR) {
-            gear->update(f);
-            return 1;
-        }
-        else if (id == WidgetID::SPEED) {
-            speed->update(f);
-            return 1;
-        }
-        else if (id == WidgetID::FUELPERCENT) {
-            fuelPercent->update(f);
-            return 1;
-        }
-        else if (id == WidgetID::COOLANTTEMP) {
-            coolantTemp->update(f);
-            return 1;
-        }
-        
-        return 0;
-    }
-
-    int update(WidgetID id, char* s) override {
-        // Check which widget to update based on id
-        if (id == WidgetID::GEAR) {
-            gear->update(s);
-            return 1;
-        }
-        else if (id == WidgetID::SPEED) {
-            speed->update(s);
-            return 1;
-        }
-        else if (id == WidgetID::FUELPERCENT) {
-            fuelPercent->update(s);
-            return 1;
-        }
-        else if (id == WidgetID::COOLANTTEMP) {
-            coolantTemp->update(s);
-            return 1;
-        }
-        
-        return 0;
+        return (id == CAN_RPM || id == CAN_GEAR || id == CAN_SPEED || id == CAN_COOLANTTEMP || id == CAN_FUELPERCENT);
     }
 
     void clear() override {
@@ -109,22 +75,26 @@ public:
     }
 
 private:
+    BarWidget*   tachometer;
     ValueWidget* fuelPercent;
     ValueWidget* gear;
     ValueWidget* coolantTemp;
     ValueWidget* speed;
 
+
     void createWidgets() {
         
         // Calculate widget dimensions
         int widgetHeight = h / 3;
-        int widgetWidth = w / 3;
+        int widgetWidth = w / 3; 
 
+        WidgetPlacement tachometerPlacement  = { x, y, w, h / 3 };
         WidgetPlacement fuelPercentPlacement = { x + ((0 * w) / 3), (y + ((1 * h) / 3)), widgetWidth, widgetHeight };
         WidgetPlacement gearPlacement        = { x + ((1 * w) / 3), (y + ((1 * h) / 3)), widgetWidth, widgetHeight };
         WidgetPlacement coolantTempPlacement = { x + ((2 * w) / 3), (y + ((1 * h) / 3)), widgetWidth, widgetHeight };
         WidgetPlacement speedPlacement       = { x + ((1 * w) / 3), (y + ((2 * h) / 3)), widgetWidth, widgetHeight };
 
+        tachometer = new BarWidget(&tft, tachometerPlacement, 0, CAN_RPM_UPPER_LIMIT, CAN_RPM_UPPER_LIMIT);
         fuelPercent = new ValueWidget(tft, fuelPercentPlacement, "Fuel %");
         gear = new ValueWidget(tft, gearPlacement, "Gear");
         coolantTemp = new ValueWidget(tft, coolantTempPlacement, "Coolant Temp");

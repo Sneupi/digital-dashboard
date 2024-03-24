@@ -3,7 +3,7 @@
 #define SCREEN_H
 
 #include <TFT_eSPI.h>
-#include "WidgetID.h"
+#include "driver/twai.h"
 
 struct ScreenPlacement {
     int x;
@@ -21,9 +21,7 @@ public:
 
     virtual void init() = 0; 
 
-	virtual int update(WidgetID id, uint16_t i) = 0; 
-    virtual int update(WidgetID id, float f) = 0;
-    virtual int update(WidgetID id, char* s) = 0;
+	virtual int update(twai_message_t msg) = 0;
 	
 	virtual void clear() = 0; 
 

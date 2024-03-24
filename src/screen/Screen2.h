@@ -6,6 +6,7 @@
 #include <TFT_eSPI.h>
 #include "Screen.h"
 #include "../widget/ValueWidget.h"
+#include "driver/twai.h"
 
 /**
  * Second screen of the dashboard.
@@ -34,82 +35,30 @@ public:
         afr->init();
     }
 
-    int update(WidgetID id, uint16_t i) override {
-        // Check which widget to update based on id
-        if (id == WidgetID::OILTEMP) {
-            oilTemp->update(i);
-            return 1;
+    int update(twai_message_t msg) override {
+        uint32_t id = msg.identifier;
+        if (id == CAN_OILTEMP)      { 
+            oilTemp->setErrorState(EvaluateCAN::oilTemp(TranslateCAN::oilTemp(msg.data)));
+            oilTemp->update(TranslateCAN::oilTemp(msg.data)); 
         }
-        else if (id == WidgetID::OILPRESSURE) {
-            oilPressure->update(i);
-            return 1;
+        if (id == CAN_OILPRESSURE)  { 
+            oilPressure->setErrorState(EvaluateCAN::oilPressure(TranslateCAN::oilPressure(msg.data)));
+            oilPressure->update(TranslateCAN::oilPressure(msg.data)); 
         }
-        else if (id == WidgetID::FUELPRESSURE) {
-            fuelPressure->update(i);
-            return 1;
+        if (id == CAN_FUELPSI) { 
+            fuelPressure->setErrorState(EvaluateCAN::fuelPSI(TranslateCAN::fuelPSI(msg.data)));
+            fuelPressure->update(TranslateCAN::fuelPSI(msg.data)); 
         }
-        else if (id == WidgetID::BATTERYVOLT) {
-            batteryVolt->update(i);
-            return 1;
+        if (id == CAN_BATTERYVOLT)  { 
+            batteryVolt->setErrorState(EvaluateCAN::batteryVolt(TranslateCAN::batteryVolt(msg.data)));
+            batteryVolt->update(TranslateCAN::batteryVolt(msg.data)); 
         }
-        else if (id == WidgetID::AFR) {
-            afr->update(i);
-            return 1;
+        if (id == CAN_AFR)          { 
+            afr->setErrorState(EvaluateCAN::afr(TranslateCAN::afr(msg.data)));
+            afr->update(TranslateCAN::afr(msg.data)); 
         }
-        
-        return 0;
-    }
 
-    int update(WidgetID id, float f) override {
-        // Check which widget to update based on id
-        if (id == WidgetID::OILTEMP) {
-            oilTemp->update(f);
-            return 1;
-        }
-        else if (id == WidgetID::OILPRESSURE) {
-            oilPressure->update(f);
-            return 1;
-        }
-        else if (id == WidgetID::FUELPRESSURE) {
-            fuelPressure->update(f);
-            return 1;
-        }
-        else if (id == WidgetID::BATTERYVOLT) {
-            batteryVolt->update(f);
-            return 1;
-        }
-        else if (id == WidgetID::AFR) {
-            afr->update(f);
-            return 1;
-        }
-        
-        return 0;
-    }
-
-    int update(WidgetID id, char* s) override {
-        // Check which widget to update based on id
-        if (id == WidgetID::OILTEMP) {
-            oilTemp->update(s);
-            return 1;
-        }
-        else if (id == WidgetID::OILPRESSURE) {
-            oilPressure->update(s);
-            return 1;
-        }
-        else if (id == WidgetID::FUELPRESSURE) {
-            fuelPressure->update(s);
-            return 1;
-        }
-        else if (id == WidgetID::BATTERYVOLT) {
-            batteryVolt->update(s);
-            return 1;
-        }
-        else if (id == WidgetID::AFR) {
-            afr->update(s);
-            return 1;
-        }
-        
-        return 0;
+        return (id == CAN_OILTEMP || id == CAN_OILPRESSURE || id == CAN_FUELPSI || id == CAN_BATTERYVOLT || id == CAN_AFR);
     }
 
     void clear() override {

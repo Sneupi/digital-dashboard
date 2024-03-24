@@ -12,7 +12,6 @@
 #include "../screen_settings.h"
 #include "../screen/Screen1.h"
 #include "../screen/Screen2.h"
-#include "../screen/WidgetID.h"
 
 #define SCREEN_COUNT 2
 
@@ -74,7 +73,7 @@ public:
         
 
         if (s >= 0 && s < SCREEN_COUNT) {
-            tft->setRotation(1);
+            tft->setRotation(SCREEN_ROTATION);
             tft->fillScreen(TFT_BLACK);
 
             setCEL(CEL);
@@ -91,16 +90,8 @@ public:
     }
   
     
-    void update(WidgetID id, uint16_t i) {
-        screen[curr_screen]->update(id, i);
-    }
-
-    void update(WidgetID id, float f) {
-        screen[curr_screen]->update(id, f);
-    }
-
-    void update(WidgetID id, char* s) {
-        screen[curr_screen]->update(id, s);
+    void update(twai_message_t msg) {
+        screen[curr_screen]->update(msg);
     }
 
 };
