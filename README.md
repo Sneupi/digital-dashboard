@@ -18,11 +18,11 @@ Originally developed for Wildcat Formula Racing (University of Arizona) Formula 
 
 Configured as-is for example project below.
 
-Reconfigurability of pinouts for CAN transceiver and pushbutton. Open `pinout.h` source files to do so.
+1. Pinouts for CAN transceiver and pushbutton. Open `pinout.h` source files to do so.
 
-Reprogrammability to interpret any vehicle's CAN-bus. Open CAN source files (`limits.h`, `TranslateCAN.h`) for instructions on how to do so. Additionally, see related tool [can-analyzer](https://github.com/Sneupi/can-analyzer) for help decoding.
+2. Vehicle-specific CAN-bus interpretation, open CAN source files (`limits.h`, `TranslateCAN.h`) for config instructions. For help decoding your vehicle, see related tool [can-analyzer](https://github.com/Sneupi/can-analyzer).
 
-Reprogrammability to work with wide range of digital displays (TFT). Read [TFT_eSPI library documentation](https://github.com/Bodmer/TFT_eSPI) and edit library accordingly (`User_Setup.h` or `User_Setup_Select.h`) for doing so.
+3. Compatible with wide range of TFT displays. Read [TFT_eSPI library documentation](https://github.com/Bodmer/TFT_eSPI) and edit library files accordingly (`User_Setup.h` or `User_Setup_Select.h`).
 
 # Example Project
 Project for University of Arizona FSAE racecar. Interprets custom MoTeC M150 CAN bus protocol.
